@@ -1,0 +1,33 @@
+import java.util.Collections;
+class Solution {
+    public int nextGreaterElement(int n) {
+        
+        int a[]=new int[10];
+        long temp=n;
+        int cur_n=0;
+        int pre_n=0;
+        while(temp!=0){
+        cur_n=(int)temp%10;
+        temp=temp/10;
+           ++a[cur_n];
+            System.out.println(Arrays.toString(a));
+          if(pre_n > cur_n){
+              int ng=cur_n+1;  //ng next greater searching
+              while(a[ng]==0)ng++; //just next greater element searched
+              --a[ng];             //-the frequency 
+              temp=temp*10+ng;
+      System.out.println(Arrays.toString(a)+temp);
+
+              for(int i=0;i<=9;i++){
+                  while(a[i]!=0){
+                      temp=temp*10+i;
+                      --a[i];}
+                   System.out.println(Arrays.toString(a)+temp);
+              }
+             return temp>Integer.MAX_VALUE?-1:(int)temp;
+          }  
+            pre_n=cur_n;
+        }
+        return -1; 
+}
+}
