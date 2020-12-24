@@ -1,0 +1,35 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+       int max=n*n ;
+        int a[][]=new int[n][n];
+        int tr=0,br=n-1,lc=0,rc=n-1;
+        int count=1;
+        int dir=0;
+        while(tr<=br&&lc<=rc){
+            
+            if(dir==0){        //right
+                for(int i=lc;i<=rc;i++)
+                    a[tr][i]=count++;
+                tr++;
+            }
+            else if(dir==1){         //boutm
+                for(int i=tr;i<=br;i++)
+                    a[i][rc]=count++;
+                  rc--;
+            }
+            else if(dir==2){   //left
+                for(int i=rc;i>=lc;i--)
+                    a[br][i]=count++;
+                    br--;
+                
+            }else if(dir==3){     //up
+                for(int i=br;i>=tr;i--)
+                    a[i][lc]=count++;
+                    lc++;
+                
+            }
+            dir=(dir+1)%4;
+        }
+        return a;
+    }
+}
