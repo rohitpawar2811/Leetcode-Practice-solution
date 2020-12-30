@@ -1,0 +1,34 @@
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        int phash[]=new int[26];
+        int shash[]=new int[26];
+        List<Integer> ans=new LinkedList<>();
+        int right=0,left=0;
+        if(s.length()<p.length())
+            return ans;
+        
+        while(right<p.length()){
+            phash[p.charAt(right)-'a']++;
+            shash[s.charAt(right++)-'a']++;
+        }
+        right-=1;
+        while(right<s.length()){
+              System.out.println(Arrays.toString(phash));
+              System.out.println(Arrays.toString(shash)); 
+            if(Arrays.equals(phash,shash)){
+                ans.add(left);
+            }
+           right+=1;
+            if(right!=s.length()){
+                System.out.println(s.charAt(right));
+                shash[s.charAt(right)-'a']++;
+                
+            }
+                            System.out.println(s.charAt(left));
+            shash[s.charAt(left)-'a']--;
+            left+=1;
+            
+        }
+        return ans;
+    }
+}
