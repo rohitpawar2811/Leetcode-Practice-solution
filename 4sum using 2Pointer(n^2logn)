@@ -1,0 +1,46 @@
+ class Solution {
+    public List<List<Integer>> fourSum(int[] a, int target) {
+          List<List<Integer>> hi=new LinkedList<>();
+        Arrays.sort(a);
+        int n=a.length;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                 
+                 sum2Pointer(a,i,j,n,target,hi);
+                while(j<n-1&&a[j+1]==a[j])j++; 
+            }
+            while(i<n-1&&a[i+1]==a[i])i++; 
+        }
+       
+        return hi;
+    }
+    
+   public  void sum2Pointer(int a[],int i,int j,int n,int t,List<List<Integer>> ri){
+       // List<List<Integer>> ri=new LinkedList<>();;
+        int sum=a[i]+a[j];
+        int l=j+1;
+        int r=n-1;
+        while(l<r){
+            if(sum+a[l]+a[r]>t){
+                r--;
+            }
+            else if(sum+a[l]+a[r]<t){
+                l++;
+            }
+            else{
+               List<Integer> li=Arrays.asList(a[i],a[j],a[l],a[r]);
+                ri.add(li);
+                int a1=a[l];
+                int b1=a[r];
+                l++;
+                r--;
+                while(l<n&&a[l]==a1)l++;
+                while(r>0&&a[r]==b1)r--;
+            }
+        }
+         
+    }
+}
+
+
+ 
