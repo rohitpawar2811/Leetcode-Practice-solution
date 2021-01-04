@@ -1,0 +1,64 @@
+207. Course Schedule
+==>There are a total of numCourses courses you have to take, labeled from 0 to numCourses-1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+Example 1:
+
+Input: numCourses = 2, prerequisites = [[1,0]]
+Output: true
+Explanation: There are a total of 2 courses to take. 
+             To take course 1 you should have finished course 0. So it is possible.
+
+
+
+
+
+import java.util.*;
+class Solution {
+     Vector<Vector<Integer>> arr;
+    int cur[];
+    public boolean canFinish(int numCourses, int[][] pre) {
+          arr =new Vector<>();
+        for(int i=0;i<=numCourses-1;i++){
+          arr.add(new Vector<Integer>());
+        }
+        
+        for(int i=0;i<pre.length;i++){
+            arr.get(pre[i][0]).add(pre[i][1]);
+           // arr.get(pre[i][1]).add(pre[i][0]);
+        }
+        
+        int vis[][]=new int[1][numCourses];
+        for(int i=0;i<numCourses;i++){
+            if(vis[0][i]==0){
+                cur=new int[numCourses];
+           boolean b=Dfs(i,vis);
+            if(b==true){
+                return false;
+            }
+            }
+        }
+        return true;
+    }
+    
+    boolean Dfs(int node,int vis[][]){
+        vis[0][node]=1;
+        cur[node]=1;
+        for(int child:arr.get(node)){
+            if(vis[0][child]==0){
+                if(Dfs(child,vis)){
+                    return true;
+                }
+                cur[child]=0;//backtrack reversing the path &undo curvisited child to                                                                  // unvisited. 
+            }
+            else{//visited
+                if(cur[child]==1){
+                 return true;   //cycle present
+                }
+            }
+        }
+        return false;//cycle not Present
+    }
+}
