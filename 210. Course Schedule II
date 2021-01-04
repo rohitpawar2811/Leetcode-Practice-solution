@@ -1,0 +1,60 @@
+210. Course Schedule II
+
+There are a total of n courses you have to take labelled from 0 to n - 1.
+
+Some courses may have prerequisites, for example, if prerequisites[i] = [ai, bi] this means you must take the course bi before the course ai.
+
+Given the total number of courses numCourses and a list of the prerequisite pairs, return the ordering of courses you should take to finish all courses.
+
+If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+
+
+
+import java.util.*;
+
+class Solution {
+    
+    public int[] findOrder(int numCourses, int[][] pre) {//TopoShort
+         if(numCourses<=2){
+             if(pre.length==numCourses)
+             return new int[]{};
+         }
+        Vector<Vector<Integer>> arr =new Vector<>();
+        for(int i=0;i<numCourses;i++){
+          arr.add(new Vector<Integer>());
+        }
+        
+        int out[]=new int[numCourses];
+        for(int i=0;i<pre.length;i++){
+            arr.get(pre[i][0]).add(pre[i][1]);//directed Edges
+            //arr.get(pre[i][1]).add(pre[i][0]);
+            ++out[pre[i][1]];
+        }
+        
+        Queue<Integer> q=new LinkedList<>();
+        
+        for(int i=0;i<out.length;i++){
+            if(out[i]==0)//kisi pa depend nahi hai
+            q.offer(i);
+        }
+        int ans[]=new int[numCourses];
+        int i=numCourses-1;
+        int count=0;
+        while(!q.isEmpty()){
+           int a= q.peek();
+             
+            ans[i--]=a;
+            q.poll();
+            count++;
+            for(int child:arr.get(a)){
+                out[child]--;
+                if(out[child]==0)
+                     q.offer(child);
+            }
+        }
+        if(count!=numCourses){
+             return new int[]{};
+        }
+       return ans ;
+    }
+}
